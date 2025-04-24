@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import Login from "../components/Login/Login";
 import SuperUserRoute from "../components/SuperUserRoute/SuperUserRoute";
+import Login from "../pages/Login/components/Login";
 
 const router = createBrowserRouter([
     {
@@ -19,6 +19,10 @@ const router = createBrowserRouter([
             {
                 path: '/superuser',
                 element: <SuperUserRoute />
+            },
+            {
+                path:'/user',
+                element: <>User</>
             }
         ]
     }
