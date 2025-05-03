@@ -1,14 +1,14 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuthContext } from '../../context/authContext'
 
-const SuperUserRoute = () => {
+const UserRoute = () => {
     const { isAuthenticated, userInfo } = useAuthContext()
 
-    return isAuthenticated && userInfo.userType === 1 ? (
+    return isAuthenticated && userInfo.userType === 0 ? (
         <Outlet />
     ) : (
         <Navigate to="/" />
     )
 }
 
-export default SuperUserRoute
+export default UserRoute

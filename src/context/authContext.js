@@ -6,12 +6,22 @@ export const useAuthContext = () => useContext(AuthContext)
 
 const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token')
-    const role = localStorage.getItem('userRole')
     const [isAuthenticated, setIsAuthenticated] = useState(!!token)
-    const [userRole, setUserRole] = useState(role)
+    const [userInfo, setUserInfo] = useState({
+        userType: parseInt(localStorage.getItem('userType')),
+    })
 
-    const contextValue = {isAuthenticated, setIsAuthenticated, userRole, setUserRole}
-    return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    const contextValue = {
+        isAuthenticated,
+        setIsAuthenticated,
+        userInfo,
+        setUserInfo,
+    }
+    return (
+        <AuthContext.Provider value={contextValue}>
+            {children}
+        </AuthContext.Provider>
+    )
 }
 
 export default AuthProvider

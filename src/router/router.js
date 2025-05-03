@@ -1,31 +1,39 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
-import SuperUserRoute from "../components/SuperUserRoute/SuperUserRoute";
-import Login from "../pages/Login/components/Login";
+import { createBrowserRouter } from 'react-router-dom'
+import App from '../App'
+import SuperUserRoute from '../components/SuperUserRoute/SuperUserRoute'
+import Login from '../pages/Login/component/Login'
+import UserRoute from '../components/UserRoute/UserRoute'
+import Home from '../pages/Home/component/Home'
+import UserMain from '../pages/UserMain/component/UserMain'
 
 const router = createBrowserRouter([
     {
-        path:'*',
-        element: <>404 not found</>
+        path: '*',
+        element: <>404 not found</>,
     },
     {
-        path:'/',
+        path: '/',
         element: <App />,
         children: [
             {
                 path: '/',
-                element: <Login />
+                element: <Home />,
             },
             {
-                path: '/superuser',
-                element: <SuperUserRoute />
+                path: '/login',
+                element: <Login />,
             },
             {
-                path:'/user',
-                element: <>User</>
-            }
-        ]
-    }
+                path: '/admin',
+                element: <SuperUserRoute />,
+            },
+            {
+                path: '/user',
+                element: <UserRoute />,
+                children: [{ path: '/user', element: <UserMain /> }],
+            },
+        ],
+    },
 ])
 
 export default router

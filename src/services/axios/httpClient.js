@@ -1,4 +1,6 @@
+import axios from 'axios'
 import { ROOT_API } from './config'
+import { refreshToken } from '../api/authentication'
 
 const client = axios.create(ROOT_API)
 
@@ -11,10 +13,20 @@ client.interceptors.request.use((config) => {
 })
 
 client.interceptors.response.use(
-    (res) => {
-        return res
-    },
-    (err) => {}
+    (res) => res,
+    async (err) => {
+        if (err.status === 401) {
+            try {
+                const response = await refreshToken()
+                let token = response.accessToken
+                localStorage.setItem('token', token)
+                err.config.headers['Authorization'] = `Bearer ${token}`
+                return client(err.config)
+            } catch (error) {
+                return Promise.reject(error)
+            }
+        }
+    }
 )
 
 export default client

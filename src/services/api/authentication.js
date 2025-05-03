@@ -1,12 +1,17 @@
-import { ENDPOINTS } from "../axios/config"
-import client from "../axios/httpClient"
+import { ENDPOINTS } from '../axios/config'
+import client from '../axios/httpClient'
 
-export const login = ({username, password}) => {
-    client.post(ENDPOINTS.login, {username, password})
-        .then(res => console.log(res))
+export const login = async ({ username, password }) => {
+    var res = await client.post(ENDPOINTS.authentication.login, {
+        username,
+        password,
+    })
+    return res.data
 }
 
-export const logout = () => {
-    localStorage.removeItem("token")
-    client.get(ENDPOINTS.logout)
+export const refreshToken = async () => {
+    var res = await client.post(ENDPOINTS.authentication.refreshToken, {
+        refreshToken: localStorage.getItem('refreshToken'),
+    })
+    return res.data
 }

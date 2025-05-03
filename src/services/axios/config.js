@@ -1,5 +1,5 @@
 export const ROOT_API = {
-    baseUrl: 'https://localhost:5000/',
+    baseURL: 'https://localhost:7279/',
     headers: {
         'Content-Type': 'application/json',
     },
@@ -7,8 +7,13 @@ export const ROOT_API = {
 
 export const ENDPOINTS = {
     authentication: {
-        login: "authentication/login",
-        logout: "authentication/logout",
-        refreshToken: "authentication/refresh"
+        login: "/api/authentication/login",
+        refreshToken: "/api/authentication/refreshToken",
+        register: "/api/authentication/register"
+    },
+    user: {
+        books: "/api/user/books",
+        categories: "/api/user/categories",
+        filteredBooks: "/api/user/books/filter"
     }
 }
