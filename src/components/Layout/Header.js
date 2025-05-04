@@ -19,7 +19,7 @@ const Header = () => {
         <Navbar expand="lg" bg="info" variant="dark" className="shadow-sm">
             <Container>
                 <Navbar.Brand as={Link} to="/" className="fw-bold">
-                    BookPort
+                    LibPort
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbar-nav" />
                 <Navbar.Collapse id="navbar-nav">

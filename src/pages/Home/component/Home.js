@@ -1,7 +1,11 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+
+    const navigate = useNavigate()
+
     return (
         <Container className="mt-5">
             <Row className="text-center mb-4">
@@ -18,7 +22,7 @@ const Home = () => {
                             <Card.Text>
                                 Explore our vast collection of books and find your next read.
                             </Card.Text>
-                            <Button variant="primary">Search Now</Button>
+                            <Button variant="primary" onClick={() => navigate("/user")}>Search Now</Button>
                         </Card.Body>
                     </Card>
                 </Col>

@@ -14,6 +14,7 @@ export const ENDPOINTS = {
     user: {
         books: "/api/user/books",
         categories: "/api/user/categories",
-        filteredBooks: "/api/user/books/filter"
+        filteredBooks: "/api/user/books/filter",
+        requests: "/api/user/requests"
     }
 }

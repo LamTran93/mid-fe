@@ -17,3 +17,13 @@ export const getFilteredBooks = async (params) => {
     let res = await client.get(ENDPOINTS.user.filteredBooks, {params})
     return res.data
 }
+
+export const postBookRequest = async (bookIds) => {
+    let res = await client.post(ENDPOINTS.user.requests, bookIds)
+    return res.data
+}
+
+export const getBookRequests = async () => {
+    let res = await client.get(ENDPOINTS.user.requests)
+    return res.data
+}
