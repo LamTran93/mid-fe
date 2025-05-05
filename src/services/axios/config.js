@@ -16,5 +16,13 @@ export const ENDPOINTS = {
         categories: "/api/user/categories",
         filteredBooks: "/api/user/books/filter",
         requests: "/api/user/requests"
+    },
+    admin: {
+        books: "/api/admin/books",
+        categories: "/api/admin/categories",
+        filteredBooks: "/api/admin/books/filter",
+        requests: "/api/admin/borrowing-requests",
+        approveRequest: "/api/admin/borrowing-requests/{id}/approve",
+        rejectRequest: "/api/admin/borrowing-requests/{id}/reject"
     }
 }

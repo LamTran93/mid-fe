@@ -1,7 +1,7 @@
-import { Accordion, Badge, Tab } from 'react-bootstrap'
-import React, { useState, useEffect } from 'react'
-import { getBookRequests } from '../../../services/api/user'
+import React, { useEffect, useState } from 'react'
+import { Tab, Accordion, Badge, Button } from 'react-bootstrap'
 import reformDate from '../../../services/date/datetime'
+import { approveRequest, getBookRequests, rejectRequest } from '../../../services/api/admin'
 
 const RequestTab = () => {
     const [requests, setRequests] = useState([])
@@ -9,6 +9,18 @@ const RequestTab = () => {
     useEffect(() => {
         getBookRequests().then((data) => setRequests(data))
     }, [])
+
+    const handleApprove = (id) => {
+        approveRequest(id).then(() => {
+            getBookRequests().then((data) => setRequests(data))
+        })
+    }
+
+    const handleReject = (id) => {
+        rejectRequest(id).then(() => {
+            getBookRequests().then((data) => setRequests(data))
+        })
+    }
 
     return (
         <Tab.Pane eventKey="requests">
@@ -43,6 +55,22 @@ const RequestTab = () => {
                                 {book.title} - Author: {book.author}
                             </Accordion.Body>
                         ))}
+                        <Accordion.Body>
+                            <Button
+                                className="me-3"
+                                onClick={() => handleApprove(request.id)}
+                                disabled={request.status !==2}
+                            >
+                                Approve
+                            </Button>
+                            <Button
+                                variant="danger"
+                                onClick={() => handleReject(request.id)}
+                                disabled={request.status !==2}
+                            >
+                                Reject
+                            </Button>
+                        </Accordion.Body>
                     </Accordion.Item>
                 ))}
             </Accordion>

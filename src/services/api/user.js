@@ -19,8 +19,7 @@ export const getFilteredBooks = async (params) => {
 }
 
 export const postBookRequest = async (bookIds) => {
-    let res = await client.post(ENDPOINTS.user.requests, bookIds)
-    return res.data
+    await client.post(ENDPOINTS.user.requests, bookIds)
 }
 
 export const getBookRequests = async () => {

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import {
+    deleteBook,
     getBooks,
     getCategories,
     getFilteredBooks,
-    postBookRequest,
-} from '../../../services/api/user'
+} from '../../../services/api/admin'
 import { Table, Form, Button, Pagination, Tab, Row, Col } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
@@ -17,11 +17,11 @@ const BookTab = () => {
     })
     const [filters, setFilters] = useState({
         title: '',
+        author: '',
         isAvailable: '',
         minimumRating: '',
         categoryId: '',
     })
-    const [selectedBooks, setSelectedBooks] = useState([])
     const [categories, setCategories] = useState([])
     const [filterMode, setFilterMode] = useState(false)
     const navigate = useNavigate()
@@ -42,14 +42,6 @@ const BookTab = () => {
     const handleFilterChange = (e) => {
         const { name, value } = e.target
         setFilters({ ...filters, [name]: value })
-    }
-
-    const handleCheckboxChange = (bookId) => {
-        setSelectedBooks((prev) =>
-            prev.includes(bookId)
-                ? prev.filter((id) => id !== bookId)
-                : [...prev, bookId]
-        )
     }
 
     const moveToPage = (page) => {
@@ -103,19 +95,13 @@ const BookTab = () => {
         })
     }
 
-    const handleRequestBooks = () => {
-        postBookRequest(selectedBooks).then((data) => {
-            alert('Send requests successfully!')
-            navigate('/user/requests')
-        })
-    }
-
-    const handleClear = () => {
-        setSelectedBooks([])
+    const handleConfirmDelete = (book) => {
+        if (window.confirm(`Delete book ${book.title} ?`))
+            deleteBook(book.id).then((data) => handleReset())
     }
 
     return (
-        <Tab.Pane eventKey="first">
+        <Tab.Pane eventKey="books">
             <h2>Books</h2>
             <Form className="mb-3">
                 <Row>
@@ -125,6 +111,15 @@ const BookTab = () => {
                             placeholder="Filter by title"
                             name="title"
                             value={filters.title}
+                            onChange={handleFilterChange}
+                        />
+                    </Col>
+                    <Col>
+                        <Form.Control
+                            type="text"
+                            placeholder="Filter by author"
+                            name="author"
+                            value={filters.author}
                             onChange={handleFilterChange}
                         />
                     </Col>
@@ -174,42 +169,63 @@ const BookTab = () => {
                             Reset
                         </Button>
                     </Col>
+                    <Col>
+                        <Button
+                            variant="secondary"
+                            onClick={() => navigate('/admin/book/create')}
+                        >
+                            <i class="bi bi-book">Create book</i>
+                        </Button>
+                    </Col>
                 </Row>
             </Form>
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>Select</th>
                         <th>Title</th>
                         <th>Author</th>
+                        <th>Description</th>
                         <th>Quantity</th>
                         <th>Category</th>
                         <th>Rating</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {books.map((book) => (
                         <tr key={book.id}>
-                            <td>
-                                <Form.Check
-                                    type="checkbox"
-                                    checked={selectedBooks.includes(book.id)}
-                                    onChange={() =>
-                                        handleCheckboxChange(book.id)
-                                    }
-                                    disabled={book.quantity === 0}
-                                />
-                            </td>
                             <td>{book.title}</td>
                             <td>{book.author}</td>
+                            <td>{book.description}</td>
                             <td>
                                 {book.quantity}/{book.total}
                             </td>
-                            <td>{book.category.name}</td>
+                            <td>
+                                {book.category
+                                    ? book.category.name
+                                    : 'No category'}
+                            </td>
                             <td>
                                 {book.ratingAverage === 0
                                     ? 'No reviews'
                                     : book.ratingAverage}
+                            </td>
+                            <td>
+                                <Button
+                                    className="mb-3"
+                                    variant="success"
+                                    onClick={() =>
+                                        navigate(`/admin/book/edit/${book.id}`)
+                                    }
+                                >
+                                    <i class="bi bi-pencil-square">Edit</i>
+                                </Button>
+                                <Button
+                                    variant="danger"
+                                    onClick={() => handleConfirmDelete(book)}
+                                >
+                                    <i class="bi bi-trash">Delete</i>
+                                </Button>
                             </td>
                         </tr>
                     ))}
@@ -221,7 +237,7 @@ const BookTab = () => {
                     active={pagination.current === 1}
                     onClick={() =>
                         moveToPage(
-                            pagination.current === 1
+                            pagination.current === 1 || pagination.current === 2
                                 ? 1
                                 : pagination.current === pagination.last
                                 ? pagination.last - 2
@@ -229,7 +245,7 @@ const BookTab = () => {
                         )
                     }
                 >
-                    {pagination.current === 1
+                    {pagination.current === 1 || pagination.current === 2
                         ? 1
                         : pagination.current === pagination.last
                         ? pagination.last - 2
@@ -237,12 +253,14 @@ const BookTab = () => {
                 </Pagination.Item>
                 <Pagination.Item
                     active={
-                        pagination.current !== 1 &&
-                        pagination.current !== pagination.last
+                        (pagination.current !== 1 &&
+                            pagination.current !== pagination.last) ||
+                        pagination.current === 2
                     }
+                    hidden={pagination.last < 2}
                     onClick={() =>
                         moveToPage(
-                            pagination.current === 1
+                            pagination.current === 1 || pagination.current === 2
                                 ? 2
                                 : pagination.current === pagination.last
                                 ? pagination.last - 1
@@ -250,14 +268,18 @@ const BookTab = () => {
                         )
                     }
                 >
-                    {pagination.current === 1
+                    {pagination.current === 1 || pagination.current === 2
                         ? 2
                         : pagination.current === pagination.last
                         ? pagination.last - 1
                         : pagination.current}
                 </Pagination.Item>
                 <Pagination.Item
-                    active={pagination.current === pagination.last && pagination.current !== 1}
+                    active={
+                        pagination.current === pagination.last &&
+                        pagination.current !== 1
+                    }
+                    hidden={pagination.last < 3}
                     onClick={() =>
                         moveToPage(
                             pagination.current === 1
@@ -276,30 +298,6 @@ const BookTab = () => {
                 </Pagination.Item>
                 <Pagination.Last onClick={() => moveToPage(pagination.last)} />
             </Pagination>
-
-            <Button
-                className="me-5"
-                variant="primary"
-                onClick={handleRequestBooks}
-                disabled={
-                    selectedBooks.length === 0 || selectedBooks.length > 5
-                }
-            >
-                Request Book
-            </Button>
-            <Button
-                variant="primary"
-                onClick={handleClear}
-                disabled={selectedBooks.length === 0}
-            >
-                Clear
-            </Button>
-
-            {selectedBooks.length > 5 && (
-                <div className="alert alert-danger">
-                    You can only select up to 5 books.
-                </div>
-            )}
         </Tab.Pane>
     )
 }

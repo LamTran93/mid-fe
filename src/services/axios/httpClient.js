@@ -25,6 +25,8 @@ client.interceptors.response.use(
             } catch (error) {
                 return Promise.reject(error)
             }
+        } else {
+            alert(`Error: ${err.response.data.detail}`)
         }
     }
 )

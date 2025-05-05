@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../context/authContext'
 
 const Header = () => {
-    const { isAuthenticated, setIsAuthenticated, setUserInfo } =
+    const { isAuthenticated, setIsAuthenticated, userInfo, setUserInfo } =
         useAuthContext()
     const navigate = useNavigate()
 
@@ -27,8 +27,8 @@ const Header = () => {
                         <Nav.Link as={Link} to="/" className="text-white">
                             Home
                         </Nav.Link>
-                        <Nav.Link as={Link} to="/about" className="text-white">
-                            About
+                        <Nav.Link as={Link} to={["/user", "admin"][userInfo.userType]} className="text-white">
+                            Dashboard
                         </Nav.Link>
                         {isAuthenticated ? (
                             <Nav.Link

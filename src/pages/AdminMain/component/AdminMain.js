@@ -7,27 +7,37 @@ import {
     Tab,
 } from 'react-bootstrap'
 import BookTab from './BookTab'
+import CategoryTab from './CategoryTab'
+import RequestTab from './RequestTab'
 
 
-const UserMain = () => {
+const AdminMain = () => {
     
     return (
-        <Container fluid className="vh-100">
-            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+        <Container fluid>
+            <Tab.Container id="left-tabs-example" defaultActiveKey="books">
                 <Row>
-                    <Col sm={3} className="bg-light p-3 vh-100">
+                    <Col sm={3} className="bg-light p-3" style={{ minHeight: '1000px' }}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item className="mb-2">
                                 <Nav.Link
-                                    eventKey="first"
+                                    eventKey="books"
                                     className="text-center"
                                 >
                                     <strong>Books</strong>
                                 </Nav.Link>
                             </Nav.Item>
+                            <Nav.Item className="mb-2">
+                                <Nav.Link
+                                    eventKey="categories"
+                                    className="text-center"
+                                >
+                                    <strong>Categories</strong>
+                                </Nav.Link>
+                            </Nav.Item>
                             <Nav.Item>
                                 <Nav.Link
-                                    eventKey="second"
+                                    eventKey="requests"
                                     className="text-center"
                                 >
                                     <strong>Requests</strong>
@@ -35,9 +45,11 @@ const UserMain = () => {
                             </Nav.Item>
                         </Nav>
                     </Col>
-                    <Col sm={9} className="vh-100">
+                    <Col sm={9} style={{ minHeight: '1000px' }}>
                         <Tab.Content>
                             <BookTab />
+                            <CategoryTab />
+                            <RequestTab />
                         </Tab.Content>
                     </Col>
                 </Row>
@@ -46,4 +58,4 @@ const UserMain = () => {
     )
 }
 
-export default UserMain
+export default AdminMain

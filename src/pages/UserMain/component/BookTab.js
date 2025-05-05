@@ -6,7 +6,6 @@ import {
     postBookRequest,
 } from '../../../services/api/user'
 import { Table, Form, Button, Pagination, Tab, Row, Col } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
 
 const BookTab = () => {
     const [books, setBooks] = useState([])
@@ -25,7 +24,6 @@ const BookTab = () => {
     const [selectedBooks, setSelectedBooks] = useState([])
     const [categories, setCategories] = useState([])
     const [filterMode, setFilterMode] = useState(false)
-    const navigate = useNavigate()
     const booksPerPage = 10
 
     useEffect(() => {
@@ -106,8 +104,7 @@ const BookTab = () => {
 
     const handleRequestBooks = () => {
         postBookRequest(selectedBooks).then((data) => {
-            alert('Send requests successfully!')
-            navigate('/user/requests')
+            if (data) alert('Send requests successfully!')
         })
     }
 
@@ -191,6 +188,7 @@ const BookTab = () => {
                     <tr>
                         <th>Select</th>
                         <th>Title</th>
+                        <th>Description</th>
                         <th>Author</th>
                         <th>Quantity</th>
                         <th>Category</th>
@@ -212,10 +210,11 @@ const BookTab = () => {
                             </td>
                             <td>{book.title}</td>
                             <td>{book.author}</td>
+                            <td>{book.description}</td>
                             <td>
                                 {book.quantity}/{book.total}
                             </td>
-                            <td>{book.category.name}</td>
+                            <td>{book.category ? book.category.name : "No category"}</td>
                             <td>
                                 {book.ratingAverage === 0
                                     ? 'No reviews'
@@ -231,7 +230,7 @@ const BookTab = () => {
                     active={pagination.current === 1}
                     onClick={() =>
                         moveToPage(
-                            pagination.current === 1
+                            pagination.current === 1 || pagination.current === 2
                                 ? 1
                                 : pagination.current === pagination.last
                                 ? pagination.last - 2
@@ -239,7 +238,7 @@ const BookTab = () => {
                         )
                     }
                 >
-                    {pagination.current === 1
+                    {pagination.current === 1 || pagination.current === 2
                         ? 1
                         : pagination.current === pagination.last
                         ? pagination.last - 2
@@ -247,13 +246,14 @@ const BookTab = () => {
                 </Pagination.Item>
                 <Pagination.Item
                     active={
-                        pagination.current !== 1 &&
-                        pagination.current !== pagination.last
+                        (pagination.current !== 1 &&
+                            pagination.current !== pagination.last) ||
+                        pagination.current === 2
                     }
                     hidden={pagination.last < 2}
                     onClick={() =>
                         moveToPage(
-                            pagination.current === 1
+                            pagination.current === 1 || pagination.current === 2
                                 ? 2
                                 : pagination.current === pagination.last
                                 ? pagination.last - 1
@@ -261,14 +261,17 @@ const BookTab = () => {
                         )
                     }
                 >
-                    {pagination.current === 1
+                    {pagination.current === 1 || pagination.current === 2
                         ? 2
                         : pagination.current === pagination.last
                         ? pagination.last - 1
                         : pagination.current}
                 </Pagination.Item>
                 <Pagination.Item
-                    active={pagination.current === pagination.last && pagination.current !== 1}
+                    active={
+                        pagination.current === pagination.last &&
+                        pagination.current !== 1
+                    }
                     hidden={pagination.last < 3}
                     onClick={() =>
                         moveToPage(
