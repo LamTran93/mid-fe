@@ -6,6 +6,7 @@ import {
     postBookRequest,
 } from '../../../services/api/user'
 import { Table, Form, Button, Pagination, Tab, Row, Col } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
 const BookTab = () => {
     const [books, setBooks] = useState([])
@@ -25,6 +26,7 @@ const BookTab = () => {
     const [categories, setCategories] = useState([])
     const [filterMode, setFilterMode] = useState(false)
     const booksPerPage = 10
+    const navigate = useNavigate()
 
     useEffect(() => {
         getBooks(pagination.current, booksPerPage).then((data) => {
@@ -214,11 +216,25 @@ const BookTab = () => {
                             <td>
                                 {book.quantity}/{book.total}
                             </td>
-                            <td>{book.category ? book.category.name : "No category"}</td>
+                            <td>
+                                {book.category
+                                    ? book.category.name
+                                    : 'No category'}
+                            </td>
                             <td>
                                 {book.ratingAverage === 0
                                     ? 'No reviews'
                                     : book.ratingAverage}
+                                {book.ratingAverage !== 0 && (
+                                    <Button
+                                        className="ms-3"
+                                        onClick={() =>
+                                            navigate(`/user/book/checkReview/${book.id}`)
+                                        }
+                                    >
+                                        Check
+                                    </Button>
+                                )}
                             </td>
                         </tr>
                     ))}

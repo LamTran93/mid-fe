@@ -12,6 +12,8 @@ import EditCategory from '../pages/EditCategory/component/EditCategory'
 import CreateBook from '../pages/CreateBook/component/CreateBook'
 import CreateUser from '../pages/CreateUser/component/CreateUser'
 import EditUser from '../pages/EditUser/component/EditUser'
+import UserReview from '../pages/UserReview/component/UserReview'
+import BookReview from '../pages/BookReview/component/BookReview'
 
 const router = createBrowserRouter([
     {
@@ -68,6 +70,14 @@ const router = createBrowserRouter([
                         path: '/user',
                         element: <UserMain />,
                     },
+                    {
+                        path: '/user/book/review/:bookId',
+                        element: <UserReview />
+                    },
+                    {
+                        path: '/user/book/checkReview/:bookId',
+                        element: <BookReview />
+                    }
                 ],
             },
         ],

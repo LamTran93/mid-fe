@@ -14,7 +14,7 @@ export const getCategories = async () => {
 }
 
 export const getFilteredBooks = async (params) => {
-    let res = await client.get(ENDPOINTS.user.filteredBooks, {params})
+    let res = await client.get(ENDPOINTS.user.filteredBooks, { params })
     return res.data
 }
 
@@ -24,5 +24,20 @@ export const postBookRequest = async (bookIds) => {
 
 export const getBookRequests = async () => {
     let res = await client.get(ENDPOINTS.user.requests)
+    return res.data
+}
+
+export const getBook = async (id) => {
+    let res = await client.get(`${ENDPOINTS.user.books}/${id}`)
+    return res.data
+}
+
+export const sendReview = async (review) => {
+    let res = await client.post(ENDPOINTS.user.reviews, review)
+    return res.data
+}
+
+export const getReviews = async (bookId) => {
+    let res = await client.get(`${ENDPOINTS.user.reviews}/${bookId}`)
     return res.data
 }
