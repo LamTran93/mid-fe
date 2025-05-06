@@ -9,6 +9,7 @@ import {
 import BookTab from './BookTab'
 import CategoryTab from './CategoryTab'
 import RequestTab from './RequestTab'
+import UserTab from './UserTab'
 
 
 const AdminMain = () => {
@@ -35,12 +36,20 @@ const AdminMain = () => {
                                     <strong>Categories</strong>
                                 </Nav.Link>
                             </Nav.Item>
-                            <Nav.Item>
+                            <Nav.Item className="mb-2">
                                 <Nav.Link
                                     eventKey="requests"
                                     className="text-center"
                                 >
                                     <strong>Requests</strong>
+                                </Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item className="mb-2">
+                                <Nav.Link
+                                    eventKey="users"
+                                    className="text-center"
+                                >
+                                    <strong>Users</strong>
                                 </Nav.Link>
                             </Nav.Item>
                         </Nav>
@@ -50,6 +59,7 @@ const AdminMain = () => {
                             <BookTab />
                             <CategoryTab />
                             <RequestTab />
+                            <UserTab />
                         </Tab.Content>
                     </Col>
                 </Row>

@@ -49,8 +49,10 @@ const CreateBook = () => {
         else {
             setError({ message: '', show: false })
             createBook(book).then((data) => {
-                alert('Create new book successfully')
-                navigate('/admin')
+                if (data) {
+                    alert('Create new book successfully')
+                    navigate('/admin')
+                }
             })
         }
     }

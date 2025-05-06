@@ -23,6 +23,8 @@ export const ENDPOINTS = {
         filteredBooks: "/api/admin/books/filter",
         requests: "/api/admin/borrowing-requests",
         approveRequest: "/api/admin/borrowing-requests/{id}/approve",
-        rejectRequest: "/api/admin/borrowing-requests/{id}/reject"
+        rejectRequest: "/api/admin/borrowing-requests/{id}/reject",
+        users: "/api/admin/users",
+        userRole: "/api/admin/users/{id}/roles"
     }
 }

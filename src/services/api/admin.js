@@ -68,3 +68,37 @@ export const approveRequest = async (id) => {
 export const rejectRequest = async (id) => {
     await client.put(ENDPOINTS.admin.rejectRequest.replace('{id}', id))
 }
+
+export const getUsers = async (keyword) => {
+    let res = await client.get(ENDPOINTS.admin.users, { params: { keyword } })
+    return res.data
+}
+
+export const setAdmin = async (id) => {
+    await client.put(
+        ENDPOINTS.admin.userRole.replace('{id}', id),
+        {},
+        {
+            params: { type: 1 },
+        }
+    )
+}
+
+export const deleteUser = async (id) => {
+    await client.delete(`${ENDPOINTS.admin.users}/${id}`)
+}
+
+export const editUser = async (user) => {
+    let res = await client.put(`${ENDPOINTS.admin.users}/${user.id}`, user)
+    return res.data
+}
+
+export const createUser = async (user) => {
+    let res = await client.post(ENDPOINTS.admin.users, user)
+    return res.data
+}
+
+export const getUser = async (id) => {
+    let res = await client.get(`${ENDPOINTS.admin.users}/${id}`)
+    return res.data
+}

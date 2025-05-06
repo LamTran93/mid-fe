@@ -24,10 +24,10 @@ const Header = () => {
                 <Navbar.Toggle aria-controls="navbar-nav" />
                 <Navbar.Collapse id="navbar-nav">
                     <Nav className="ms-auto">
-                        <Nav.Link as={Link} to="/" className="text-white">
+                        <Nav.Link as={Link} to="/" className="text-white" hidden={!isAuthenticated}>
                             Home
                         </Nav.Link>
-                        <Nav.Link as={Link} to={["/user", "admin"][userInfo.userType]} className="text-white">
+                        <Nav.Link as={Link} to={["/user", "admin"][userInfo.userType]} className="text-white" hidden={!isAuthenticated}>
                             Dashboard
                         </Nav.Link>
                         {isAuthenticated ? (

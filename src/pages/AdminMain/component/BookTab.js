@@ -174,7 +174,7 @@ const BookTab = () => {
                             variant="secondary"
                             onClick={() => navigate('/admin/book/create')}
                         >
-                            <i class="bi bi-book">Create book</i>
+                            <i className="bi bi-book">Create book</i>
                         </Button>
                     </Col>
                 </Row>
@@ -218,13 +218,13 @@ const BookTab = () => {
                                         navigate(`/admin/book/edit/${book.id}`)
                                     }
                                 >
-                                    <i class="bi bi-pencil-square">Edit</i>
+                                    <i className="bi bi-pencil-square">Edit</i>
                                 </Button>
                                 <Button
                                     variant="danger"
                                     onClick={() => handleConfirmDelete(book)}
                                 >
-                                    <i class="bi bi-trash">Delete</i>
+                                    <i className="bi bi-trash">Delete</i>
                                 </Button>
                             </td>
                         </tr>

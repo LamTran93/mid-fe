@@ -1,11 +1,7 @@
-import React from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
+import { Container, Row, Col, Card, Button } from 'react-bootstrap'
 
 const Home = () => {
-
-    const navigate = useNavigate()
-
     return (
         <Container className="mt-5">
             <Row className="text-center mb-4">
@@ -20,9 +16,10 @@ const Home = () => {
                         <Card.Body>
                             <Card.Title>Search Books</Card.Title>
                             <Card.Text>
-                                Explore our vast collection of books and find your next read.
+                                Explore our vast collection of books and find
+                                your next read.
                             </Card.Text>
-                            <Button variant="primary" onClick={() => navigate("/user")}>Search Now</Button>
+                            <Button variant="primary">Search Now</Button>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -31,7 +28,8 @@ const Home = () => {
                         <Card.Body>
                             <Card.Title>Library Events</Card.Title>
                             <Card.Text>
-                                Stay updated with the latest events happening at the library.
+                                Stay updated with the latest events happening at
+                                the library.
                             </Card.Text>
                             <Button variant="primary">View Events</Button>
                         </Card.Body>
@@ -42,7 +40,8 @@ const Home = () => {
                         <Card.Body>
                             <Card.Title>Membership</Card.Title>
                             <Card.Text>
-                                Become a member to enjoy exclusive benefits and services.
+                                Become a member to enjoy exclusive benefits and
+                                services.
                             </Card.Text>
                             <Button variant="primary">Join Now</Button>
                         </Card.Body>
@@ -50,7 +49,7 @@ const Home = () => {
                 </Col>
             </Row>
         </Container>
-    );
-};
+    )
+}
 
-export default Home;
+export default Home

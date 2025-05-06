@@ -26,7 +26,9 @@ client.interceptors.response.use(
                 return Promise.reject(error)
             }
         } else {
-            alert(`Error: ${err.response.data.detail}`)
+            console.log(err)
+            alert(`Error: ${err.response.data.detail ?? JSON.stringify(err.response.data.errors) ?? 'Unknown error'}`)
+            return { data: null }
         }
     }
 )

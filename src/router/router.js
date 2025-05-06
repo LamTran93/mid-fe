@@ -10,6 +10,8 @@ import NotFound from '../pages/NotFound/component/NotFound'
 import EditBook from '../pages/EditBook/component/EditBook'
 import EditCategory from '../pages/EditCategory/component/EditCategory'
 import CreateBook from '../pages/CreateBook/component/CreateBook'
+import CreateUser from '../pages/CreateUser/component/CreateUser'
+import EditUser from '../pages/EditUser/component/EditUser'
 
 const router = createBrowserRouter([
     {
@@ -47,6 +49,14 @@ const router = createBrowserRouter([
                     {
                         path: '/admin/book/create',
                         element: <CreateBook />
+                    },
+                    {
+                        path: '/admin/user/create',
+                        element: <CreateUser />
+                    },
+                    {
+                        path: '/admin/user/edit/:id',
+                        element: <EditUser />
                     }
                 ],
             },
